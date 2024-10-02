@@ -11,6 +11,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
+
+
 
 @login_required(login_url='/login')
 def show_main(request):
@@ -115,10 +118,13 @@ def edit_mood(request, id):
 @csrf_exempt
 @require_POST
 def add_mood_entry_ajax(request):
+    mood = strip_tags(request.POST.get("mood")) # strip HTML tags!
+    feelings = strip_tags(request.POST.get("feelings")) # strip HTML tags!
     mood = request.POST.get("mood")
     feelings = request.POST.get("feelings")
     mood_intensity = request.POST.get("mood_intensity")
     user = request.user
+    
 
     new_mood = MoodEntry(
         mood=mood, feelings=feelings,
