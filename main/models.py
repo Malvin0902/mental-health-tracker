@@ -13,6 +13,7 @@ class MoodEntry(models.Model):
     feelings = models.TextField()
     mood_intensity = models.IntegerField()
     
+    
 
     @property
     def is_mood_strong(self):
