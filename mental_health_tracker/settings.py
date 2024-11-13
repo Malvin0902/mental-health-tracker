@@ -21,15 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3$47x+y16+=d&iii(l4w8mi$)2&!=ppt$l))2e6y-(*mf&e!9d'
+SECRET_KEY = 'django-insecure-weghe-z1ey#qz9^@cqkox+fg6*%3yet+qh7zi*q_7it3o&y399'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = not PRODUCTION
 
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "malvin-muhammad-mentalhealthtracker.pbp.cs.ui.ac.id"]
 
-
-ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://malvin-muhammad-mentalhealthtracker.pbp.cs.ui.ac.id", "https://malvin-muhammad-mentalhealthtracker.pbp.cs.ui.ac.id/"]
 
 
 # Application definition
@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
+    'main',
+    'authentication',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -52,8 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'mental_health_tracker.urls'
@@ -121,21 +123,26 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+# Static files (CSS, JavaScript, Images)
+# Dokumentasi: https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = '/static/'
 if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / 'static' # merujuk ke /static root project pada mode development
     ]
 else:
-    STATIC_ROOT = BASE_DIR / 'static'
+    STATIC_ROOT = BASE_DIR / 'static' # merujuk ke /static root project pada mode production
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-...
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "malvin-muhammad-mentalhealthtracker.pbp.cs.ui.ac.id"]
-...
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://malvin-muhammad-mentalhealthtracker.pbp.cs.ui.ac.id/", "http://malvin-muhammad-mentalhealthtracker.pbp.cs.ui.ac.id/"] 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
